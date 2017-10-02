@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -116,11 +117,17 @@ public class MainActivity extends AppCompatActivity {
             countList++;
         }
         //call showResult
+        resultMessage(btnSubmit);
     }
 
     public void updateQuestion(View view){
 
         if(questionNumber == questions.length){
+            radioOptionA.setEnabled(false);
+            radioOptionB.setEnabled(false);
+            radioOptionC.setEnabled(false);
+            radioGroup.clearCheck();
+
             checktAnswer();
         }else{
             txtQuestion.setText(questions[questionNumber]);
@@ -128,9 +135,21 @@ public class MainActivity extends AppCompatActivity {
             radioOptionB.setText(optionB[questionNumber]);
             radioOptionC.setText(optionC[questionNumber]);
 
+            radioGroup.clearCheck();
             questionNumber++;
         }
 
+
+    }
+
+    public void resultMessage(View view){
+        AlertDialog alertDialog;
+        alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Result");
+        alertDialog.setMessage("Right Answers: " + rightAnswers);
+        alertDialog.show();
+        btnSubmit.setEnabled(false);
+        txtQuestion.setText("Right Answers: " + rightAnswers);
 
     }
 

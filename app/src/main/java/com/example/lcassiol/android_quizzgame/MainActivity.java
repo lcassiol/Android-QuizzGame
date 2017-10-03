@@ -1,5 +1,8 @@
 package com.example.lcassiol.android_quizzgame;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
@@ -27,29 +30,29 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnSubmit;
 
-    String questions[] = {"Primeira Pergunta?",
-            "Segunda Pergunta?",
-            "Terceira Pergunta?",
-            "Quarta Pergunta?",
-            "Quinta Pergunta?",};
+    String questions[] = {"Earth is the third planet from the Sun.",
+            "How many fingers have a hand?",
+            "Complete the word: Coca-",
+            "What weight of the earth?",
+            "If you have five lemons and you have sold two, how much do you have?",};
 
-    String optionA[] = {"Resposta A para primeira pergunta",
-            "Resposta A para segunda pergunta",
-            "Resposta A para terceira pergunta",
-            "Resposta A para quarta pergunta",
-            "Resposta A para quinta pergunta"};
+    String optionA[] = {"True",
+            "Two",
+            "Nah",
+            "5,972 × 10^24 kg",
+            "2"};
 
-    String optionB[] = {"Resposta B para primeira pergunta",
-            "Resposta B para segunda pergunta",
-            "Resposta B para terceira pergunta",
-            "Resposta B para quarta pergunta",
-            "Resposta B para quinta pergunta"};
+    String optionB[] = {"False",
+            "Five",
+            "Blue",
+            "5,962 × 10^24 kg",
+            "3"};
 
-    String optionC[] = {"Resposta C para primeira pergunta",
-            "Resposta C para segunda pergunta",
-            "Resposta C para terceira pergunta",
-            "Resposta C para quarta pergunta",
-            "Resposta C para quinta pergunta"};
+    String optionC[] = {"True and False?",
+            "Six, obviously!",
+            "Cola",
+            "5,942 × 10^24 kg",
+            "8"};
 
     int[] answers = new int[questions.length];
     int answersKeys[] = {1,2,3,1,2};
@@ -144,12 +147,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void resultMessage(View view){
         AlertDialog alertDialog;
-        alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setCancelable(false);
         alertDialog.setTitle("Result");
         alertDialog.setMessage("Right Answers: " + rightAnswers);
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE,"Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent personInfoIntent = new Intent(getApplicationContext(), ResultActivity.class);
+                personInfoIntent.putExtra("result",rightAnswers);
+
+                startActivity(personInfoIntent);
+            }
+        });
         alertDialog.show();
         btnSubmit.setEnabled(false);
-        txtQuestion.setText("Right Answers: " + rightAnswers);
 
     }
 
